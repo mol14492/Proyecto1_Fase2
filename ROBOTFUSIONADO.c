@@ -29,6 +29,7 @@
  void Analizar();
  
  void Centro();
+ void Centro2();
  
 /////////////////////////////////////////////////////////////////////
 //Declaracion de Variables
@@ -44,7 +45,7 @@
  int chock2;
  chock=0;
  chock2=0;
- DisPared=7;
+ DisPared=6;
  
  
 /////////////////////////////////////////////////////////////////////
@@ -68,7 +69,7 @@ void Adelante()
    Analizar();
  
    
-  if (DisNorte>6)
+  if (Analisis[0]==7)
    {
      drive_goto(21,21);// para 7(21) centrimetros 
     }  
@@ -83,9 +84,10 @@ void Paso()
   { 
     Analizar();
    variable=DisEste2;
-   if (Analisis[0]==7)
+   //if (Analisis[0]==7)
+   if (DisNorte>8)
    {
-      drive_goto(variable+15,variable+15);//el bueno era 30
+      drive_goto(variable*3+10,variable*3+ 10);//el bueno era 30
    }   
   }
   
@@ -102,27 +104,56 @@ void Centro()
   while(chock==0)
   {
    
-     // adelante=ping_cm(8); 
+        DisNorte=ping_cm(8); 
         DisEste=ping_cm(2);
         DisEste2=ping_cm(10);
- 
+   // if (DisEste2<15 && DisEste<15)
+   // {
        if (DisEste2<DisEste)
        {
            drive_speed(0,0);
-           drive_goto(1,0);  
+           drive_goto(2,0);  
         } 
         if (DisEste2>DisEste)
         {
           drive_speed(0,0);
-          drive_goto(0,1);
+          drive_goto(0,2);
           } 
         if (DisEste2==DisEste)
        {
            chock=1;
        }
+   // }    
   }  
    
 }
+
+
+void Centro2()
+{
+ Analizar();
+  if (DisEste2>6){
+
+if (DisNorte>4){
+    drive_goto(6,0);
+    drive_goto(8,8);
+    drive_goto(0,6);
+    drive_goto(-8,-8);  
+  }
+} 
+else if(DisEste<3){
+
+  
+   if (DisNorte>4){
+    drive_goto(0,12);
+    drive_goto(8,8);
+    drive_goto(12,0);
+    drive_goto(-8,-8);
+  }
+ }  
+}
+
+  
 
 void Analizar()
 {
@@ -156,45 +187,123 @@ void Analizar()
 
 void main()
 {
+  
   pause(6000);
-  while(1)
-  {
-    Analizar();
+while(1)
+{
+	Analizar();
     
-    if (Analisis[3]==6)
-    {  
-      	if (Analisis[0]==7)
-       {
-        Centro();
-      	Adelante();
-        }
-      	else
-       {
-        	if (Analisis[1]==7)
-           { 
-           Paso();
-        	 GIzquierda();
-           Paso();
-           if (Analisis[0]==7)
-             {
-                 //  Centro();
-                Adelante();
-             }            
-        	}
-       } 
-     }   
-   
-   
-     if (Analisis[3]==7)
-     {
-        drive_speed(0,0);
-        Paso();
-    	  GDerecha();
-       Paso();
-       if (Analisis[0]==7)
-       {
-          Adelante();
-       }          
-    }
-  }
+    	if (DisNorte<3)
+	{
+	 	drive_goto(-7,-7); 	
+	}
+
+	Analizar();
+
+	if (Analisis[1]==7 && Analisis[3]==6)
+	{
+		
+		if (DisNorte>6)
+		{
+			drive_goto(16,16);
+		}
+	}
+	
+	else if (Analisis[1]==6 && Analisis[3]==6)
+	{	
+	 	
+    if(DisEste2<8 && DisEste<8)
+    {
+    Centro();
+    }    	
+    
+     //
+     if(DisEste2<3 && DisEste<3)
+    {
+    Centro2();
+    } 
+    // 
+    
+    
+    
+    
+ 	if (DisNorte>6)
+		{
+			drive_goto(16,16);
+		}
+	}
+
+	else if (Analisis[1]==6 && Analisis[3]==7)
+	{
+		
+		if (DisNorte>6)
+		{
+			drive_goto(16,16);
+		}
+	}
+
+	else if (Analisis[1]==7 && Analisis[3]==7)
+	{
+		
+		if (DisNorte>5)
+		{
+			drive_goto(16,16);
+		}
+
+		GDerecha();
+		if (DisNorte>5)
+		{
+			drive_goto(19,19);
+		}
+  
+    if (DisNorte>7)
+		{
+			drive_goto(23,23);
+		}
+     
+     
+	 if(DisEste2<8 && DisEste<8)
+    {
+    Centro();
+    } 
+    
+    //
+     if(DisEste2<3 && DisEste<3)
+    {
+    Centro2();
+    } 
+    // 
+    
+    
+    
+	}
+	Analizar();
+
+	if (Analisis[0]==7 && Analisis[1]==7 && Analisis[3]==7)
+
+	{
+		GDerecha();
+
+		if (DisNorte>6)
+		{
+			drive_goto(19,19);
+		}
+     if (DisNorte>7)
+		{
+			drive_goto(23,23);
+		}
+	}
+
+
+	else if (Analisis[0]==6 && Analisis[1]==6 && Analisis[3]==6)
+	{
+		if (DisNorte<3)
+		{
+	 		drive_goto(-7,-7); 	
+		}	
+		
+		GIzquierda();
+	}
+}
+
 }
