@@ -43,6 +43,9 @@
  int variable;
  int chock;
  int chock2;
+ int Stack[200];
+ int iStack;
+ iStack=0;
  chock=0;
  chock2=0;
  DisPared=6;
@@ -75,11 +78,12 @@ void Adelante()
     }  
 }
 
+//Funcion que detiene robot
 void Paro()
   {
   drive_speed(0,0);
   }
-  
+  //Funion que da un paso de robot
 void Paso()
   { 
     Analizar();
@@ -91,6 +95,7 @@ void Paso()
    }   
   }
   
+ //preAnalisis hace analisis de entorno necesario
 void PreAnalizar()
 {
   DisNorte=ping_cm(8);
@@ -98,6 +103,7 @@ void PreAnalizar()
   DisEste=ping_cm(2);
 }
 
+//funcion de centrado de robot
 void Centro()
 {
   chock=0;
@@ -128,7 +134,7 @@ void Centro()
    
 }
 
-
+//otra funcion de centrado de robot
 void Centro2()
 {
  Analizar();
@@ -154,7 +160,7 @@ else if(DisEste<3){
 }
 
   
-
+//Analisis determinar si existen o no paredes en el entorno
 void Analizar()
 {
   PreAnalizar();
@@ -185,10 +191,12 @@ void Analizar()
       }      
   }
 
+
+//Main es el cerebro de todo el programa
 void main()
 {
   
-  pause(6000);
+  pause(2000);
 while(1)
 {
 	Analizar();
@@ -206,6 +214,8 @@ while(1)
 		if (DisNorte>6)
 		{
 			drive_goto(16,16);
+        Stack[iStack]=1;
+        iStack=iStack+1;
 		}
 	}
 	
@@ -230,6 +240,8 @@ while(1)
  	if (DisNorte>6)
 		{
 			drive_goto(16,16);
+         Stack[iStack]=1;
+         iStack=iStack+1;
 		}
 	}
 
@@ -239,6 +251,8 @@ while(1)
 		if (DisNorte>6)
 		{
 			drive_goto(16,16);
+        Stack[iStack]=1;
+        iStack=iStack+1;
 		}
 	}
 
@@ -248,17 +262,26 @@ while(1)
 		if (DisNorte>5)
 		{
 			drive_goto(16,16);
+        Stack[iStack]=1;
+        iStack=iStack+1;
 		}
 
 		GDerecha();
+  
+        Stack[iStack]=3;
+        iStack=iStack+1;
 		if (DisNorte>5)
 		{
 			drive_goto(19,19);
+         Stack[iStack]=1;
+        iStack=iStack+1;
 		}
   
     if (DisNorte>7)
 		{
 			drive_goto(23,23);
+         Stack[iStack]=1;
+        iStack=iStack+1;
 		}
      
      
@@ -283,14 +306,21 @@ while(1)
 
 	{
 		GDerecha();
+  
+        Stack[iStack]=3;
+        iStack=iStack+1;
 
 		if (DisNorte>6)
 		{
 			drive_goto(19,19);
+         Stack[iStack]=1;
+        iStack=iStack+1;
 		}
      if (DisNorte>7)
 		{
 			drive_goto(23,23);
+         Stack[iStack]=1;
+        iStack=iStack+1;
 		}
 	}
 
@@ -303,6 +333,8 @@ while(1)
 		}	
 		
 		GIzquierda();
+        Stack[iStack]=2;
+        iStack=iStack+1;
 	}
 }
 
